@@ -5,9 +5,9 @@ function echo() {
     xhttp.onload = function() {
       //document.getElementById("demo").innerHTML = this.responseText;
       var message = JSON.parse(this.responseText);
-      alert("reply from the server: " + message['reply']);
-      helloWorld();
-      document.location = "/Home";
+      //alert("reply from the server: " + message['reply']);
+      //helloWorld();
+      //document.location = "/Home";
     }
     var message = {'message' : "myMessage"};
     xhttp.open("POST", "/echo");

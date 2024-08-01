@@ -1,8 +1,41 @@
 
 //Global vars
 
+
 function window_onload() {
-    return;
+    const loginForm = document.querySelector("#login");
+    if (document.getElementById("error").value == '1') {
+        setFormMessage(loginForm, "error", "Invalid username/ password combination");
+    } else if (document.getElementById("error").value == '2') {
+        setFormMessage(loginForm, "error", "Username does not exist!");
+    }
+    /*const loginForm = document.querySelector("#login");
+    var map = parseLink();
+    if (map.has('e') && map.get('e') == '1') {
+        setFormMessage(loginForm, "error", "Invalid username/ password combination");
+    } else {
+        setFormMessage(loginForm, "error", "worked!")
+    }*/
+}
+
+function parseLink() {
+    var url = document.location.href;
+    const vars = new Map();
+    if (url.indexOf("?") != -1) {
+        var params = url.split("?");
+        if (params[1].indexOf("&") != -1) {
+            var paramsSplit = params[1].split("&");
+            for (var i = 0; i < paramsSplit.length; i++)  {
+                var keyVal = paramsSplit[i].split("=");
+                vars.set(keyVal[0], keyVal[1]);
+            }
+        } else {
+            var keyVal = params[1].split("=");
+            vars.set(keyVal[0], keyVal[1]);
+        }
+    }
+    
+    return vars;
 }
 
 function createAccountOnClick() {
@@ -10,7 +43,6 @@ function createAccountOnClick() {
     const createAccountForm = document.querySelector("#createAccount");
     loginForm.classList.add("form--hidden");
     createAccountForm.classList.remove("form--hidden");
-    echo();
 }
 
 function backToLogin() {

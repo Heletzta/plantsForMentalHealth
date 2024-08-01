@@ -37,21 +37,25 @@ def connect():
     ) 
     return cnx
 
-@app.route('/checkPassword', methods=['GET'])
+@app.route('/checkPassword', methods=['POST'])
 def checkPassword():
     cnx = connect()
     cursor = cnx.cursor()
-    #print(request.args.get('username'))
-    #print(request.args.get('password'))
-    query = f'SELECT userID, userPassword FROM users WHERE username = "{request.args.get('username')}";'
+    #print(request.form['username'])
+    #print(request.form['password'])
+    query = f'SELECT userID, userPassword FROM users WHERE username = "{request.form['username']}";'
     cursor.execute(query)
     content = cursor.fetchall()
+    #print(content)
+    if not content:
+        return render_template('login2.html', e='2')
     password = content[0][1]
     id = content[0][0]
-    if request.args.get('password') == password:
+    if request.form['password'] == password:
         print("id: ", id)
-        return f'{id}'
-    return "False"
+        #return f'{id}'
+        return home()
+    return render_template('login2.html', e='1')
 
 # returns the name of the specified user!
 @app.route('/getUser', methods=['GET'])
