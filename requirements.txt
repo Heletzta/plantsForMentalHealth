@@ -1,0 +1,6 @@
+waitress
+Flask
+Python
+mysql-connector-python
+ParseHub
+Task Scheduler
