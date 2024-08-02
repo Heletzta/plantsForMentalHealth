@@ -6,9 +6,41 @@ import os
 import ssl
 import requests
 import mysql.connector
-
+from cryptography.fernet import Fernet
 
 app = Flask(__name__)
+
+def connect():
+    cnx = mysql.connector.connect(
+        user="tami",
+        password="lac00caracha!Yay",
+        host="localhost",
+        database="myDB",
+        connection_timeout=10000
+    ) 
+    return cnx
+
+
+def getKey():
+    cnx = connect()
+    cursor = cnx.cursor()
+    query = f'SELECT keyNum FROM keyNum;'
+    cursor.execute(query)
+    content = cursor.fetchall()    
+    print(content)
+    if not content:
+        key = Fernet.generate_key()
+        insert = f'insert into keyNum (keyNum) values ("{key}")'
+        cursor.execute(insert)
+        cursor.close
+        return key
+    cursor.close
+    return content[0]
+
+key = getKey()
+#print(key)
+
+
 
 @app.route('/')
 def hello_world():
@@ -27,15 +59,22 @@ def post():
 #    content = request.get_json()
 #    id = content['id']
 
-def connect():
-    cnx = mysql.connector.connect(
-        user="tami",
-        password="lac00caracha!Yay",
-        host="localhost",
-        database="myDB",
-        connection_timeout=10000
-    ) 
-    return cnx
+
+
+@app.route('/createAccount', methods = ['POST'])
+def createAccount():
+    fernet = Fernet(key)
+    
+    cnx = connect()
+    cursor = cnx.cursor()
+
+    
+    username = request.form['username']
+    query = f'SELECT userID, userPassword FROM users WHERE username = "{username}";'
+    cursor.execute(query)
+    content = cursor.fetchall()
+    # STOPPED HEREEE
+
 
 @app.route('/checkPassword', methods=['POST'])
 def checkPassword():
@@ -43,16 +82,19 @@ def checkPassword():
     cursor = cnx.cursor()
     #print(request.form['username'])
     #print(request.form['password'])
-    query = f'SELECT userID, userPassword FROM users WHERE username = "{request.form['username']}";'
+    fernet = Fernet(key)
+    username = request.form['username']
+    query = f'SELECT userID, userPassword FROM users WHERE username = "{username}";'
     cursor.execute(query)
     content = cursor.fetchall()
+    cursor.close
     #print(content)
     if not content:
         return render_template('login2.html', e='2')
-    password = content[0][1]
+    encryptedPassword = fernet.encrypt(content[0][1].encode())
     id = content[0][0]
-    if request.form['password'] == password:
-        print("id: ", id)
+    if request.form['password'] == encryptedPassword:
+        #print("id: ", id)
         #return f'{id}'
         return home()
     return render_template('login2.html', e='1')
