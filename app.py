@@ -27,17 +27,19 @@ def getKey():
     query = f'SELECT keyNum FROM keyNum;'
     cursor.execute(query)
     content = cursor.fetchall()    
-    print(content)
+    #print(content[0][0])
     if not content:
         key = Fernet.generate_key()
-        insert = f'insert into keyNum (keyNum) values ("{key}")'
+        insert = f'insert into keyNum (keyNum) values ("{key.decode()}")'
         cursor.execute(insert)
+        cnx.commit()
         cursor.close
         return key
     cursor.close
-    return content[0]
+    return content[0][0]
 
 key = getKey()
+fernet = Fernet(key)
 #print(key)
 
 
@@ -61,19 +63,33 @@ def post():
 
 
 
-@app.route('/createAccount', methods = ['POST'])
-def createAccount():
-    fernet = Fernet(key)
+@app.route('/createAccountMethod', methods = ['POST'])
+def createAccountMethod():
     
     cnx = connect()
     cursor = cnx.cursor()
-
-    
-    username = request.form['username']
-    query = f'SELECT userID, userPassword FROM users WHERE username = "{username}";'
+    print("hello!")
+    firstname = request.form['Firstname']
+    print(firstname)
+    lastname = request.form['Lastname']
+    print(lastname)
+    username = request.form['usernameCreate']
+    print(username)
+    password = request.form['passwordCreate']
+    print(password)
+    email = request.form['Email']
+    print(email)
+    encryptedPassword = fernet.encrypt(password.encode()).decode()
+    print(type(encryptedPassword))
+    #encryptedPassword = "'" + encryptedPassword + "'"
+    print(encryptedPassword)
+    print()
+    query = f'insert into users (firstName, lastName, email, username, userPassword, adminOrNot) values ("{firstname}", "{lastname}", "{email}", "{username}", "{encryptedPassword}", false);'
     cursor.execute(query)
-    content = cursor.fetchall()
-
+    cnx.commit()
+    cursor.close
+    return render_template('login2.html', e='3')
+    
     # STOPPED HEREEE
 
 
@@ -81,9 +97,8 @@ def createAccount():
 def checkPassword():
     cnx = connect()
     cursor = cnx.cursor()
-    print(request.form['username'])
-    print(request.form['password'])
-    #fernet = Fernet(key)
+    #print(request.form['username'])
+    #print(request.form['password'])
     username = request.form['username']
     query = f'SELECT userID, userPassword FROM users WHERE username = "{username}";'
     cursor.execute(query)
@@ -92,10 +107,12 @@ def checkPassword():
     #print(content)
     if not content:
         return render_template('login2.html', e='2')
-    #encryptedPassword = fernet.encrypt(content[0][1].encode())
-    password = content[0][1]
+    print(type(content[0][1]))
+    print(content[0][1].encode())
+    print("decoded: ", fernet.decrypt(content[0][1].encode()).decode())
+    print("user password: ", request.form['password'])
     id = content[0][0]
-    if request.form['password'] == password:
+    if request.form['password'] == fernet.decrypt(content[0][1].encode()).decode():
         #print("id: ", id)
         #return f'{id}'
         return home()

@@ -8,6 +8,8 @@ function window_onload() {
         setFormMessage(loginForm, "error", "Invalid username/ password combination");
     } else if (document.getElementById("error").value == '2') {
         setFormMessage(loginForm, "error", "Username does not exist!");
+    } else if (document.getElementById("error").value == '3') {
+        setFormMessage(loginForm, "error", "Your account has been created! Please login here.");
     }
     /*const loginForm = document.querySelector("#login");
     var map = parseLink();
