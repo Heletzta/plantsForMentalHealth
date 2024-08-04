@@ -73,6 +73,7 @@ def createAccount():
     query = f'SELECT userID, userPassword FROM users WHERE username = "{username}";'
     cursor.execute(query)
     content = cursor.fetchall()
+
     # STOPPED HEREEE
 
 
@@ -80,9 +81,9 @@ def createAccount():
 def checkPassword():
     cnx = connect()
     cursor = cnx.cursor()
-    #print(request.form['username'])
-    #print(request.form['password'])
-    fernet = Fernet(key)
+    print(request.form['username'])
+    print(request.form['password'])
+    #fernet = Fernet(key)
     username = request.form['username']
     query = f'SELECT userID, userPassword FROM users WHERE username = "{username}";'
     cursor.execute(query)
@@ -91,9 +92,10 @@ def checkPassword():
     #print(content)
     if not content:
         return render_template('login2.html', e='2')
-    encryptedPassword = fernet.encrypt(content[0][1].encode())
+    #encryptedPassword = fernet.encrypt(content[0][1].encode())
+    password = content[0][1]
     id = content[0][0]
-    if request.form['password'] == encryptedPassword:
+    if request.form['password'] == password:
         #print("id: ", id)
         #return f'{id}'
         return home()
@@ -156,3 +158,15 @@ if __name__ == '__main__':
 
 # web browser makes a request to the server. Server makes a request to SQL. SQL returns the response to the server
 # web server responds to the client
+
+
+"""
+
+Open the command prompt
+Navigate to the bin folder
+Run the command mysql -u root -p
+Enter your password
+
+
+create database myDB;
+"""
