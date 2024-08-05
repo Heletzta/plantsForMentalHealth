@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask import redirect
 from flask import request
 import json
@@ -8,7 +8,11 @@ import requests
 import mysql.connector
 from cryptography.fernet import Fernet
 
+
+
 app = Flask(__name__)
+app.secret_key = "hello"
+
 
 def connect():
     cnx = mysql.connector.connect(
@@ -68,22 +72,17 @@ def createAccountMethod():
     
     cnx = connect()
     cursor = cnx.cursor()
-    print("hello!")
+    #print("hello!")
     firstname = request.form['Firstname']
-    print(firstname)
+    #print(firstname)
     lastname = request.form['Lastname']
-    print(lastname)
+    #print(lastname)
     username = request.form['usernameCreate']
-    print(username)
+    #print(username)
     password = request.form['passwordCreate']
-    print(password)
     email = request.form['Email']
-    print(email)
     encryptedPassword = fernet.encrypt(password.encode()).decode()
-    print(type(encryptedPassword))
     #encryptedPassword = "'" + encryptedPassword + "'"
-    print(encryptedPassword)
-    print()
     query = f'insert into users (firstName, lastName, email, username, userPassword, adminOrNot) values ("{firstname}", "{lastname}", "{email}", "{username}", "{encryptedPassword}", false);'
     cursor.execute(query)
     cnx.commit()
@@ -107,16 +106,21 @@ def checkPassword():
     #print(content)
     if not content:
         return render_template('login2.html', e='2')
-    print(type(content[0][1]))
-    print(content[0][1].encode())
-    print("decoded: ", fernet.decrypt(content[0][1].encode()).decode())
-    print("user password: ", request.form['password'])
+    #print(type(content[0][1]))
+    #print(content[0][1].encode())
+    #print("decoded: ", fernet.decrypt(content[0][1].encode()).decode())
+    #print("user password: ", request.form['password'])
     id = content[0][0]
     if request.form['password'] == fernet.decrypt(content[0][1].encode()).decode():
-        #print("id: ", id)
-        #return f'{id}'
+        session['userID'] = id # unique to everyone that logs in to the application
         return home()
     return render_template('login2.html', e='1')
+
+
+@app.route('/logout_user', methods = ['GET', 'POST'])
+def logout_user():
+    session.pop('userID', None)
+    return render_template('login2.html')
 
 # returns the name of the specified user!
 @app.route('/getUser', methods=['GET'])
@@ -135,12 +139,18 @@ def getUser():
 
 @app.route('/Home')
 def home():
-   return render_template('Home.html')
+    userID = None
+    if session['userID']:
+        userID = session['userID']
+    return render_template('Home.html')
 
 @app.route('/Login')
 def login():
    return render_template('login2.html')
 
+@app.route('/Garden')
+def Garden():
+   return render_template('Garden.html')
 
 # fetches the last run data, make take a while
 @app.route('/getberkeleyEventsFetch', methods=['GET'])
@@ -168,10 +178,16 @@ def getURL():
 
 
 
+
 print("STARTED PYTHON WEBSERVICE")
 
 if __name__ == '__main__':
+    
+    #app.config['SESSION_TYPE'] = 'filesystem'
     app.run(host = '0.0.0.0', port=5000)
+
+    
+    
 
 # web browser makes a request to the server. Server makes a request to SQL. SQL returns the response to the server
 # web server responds to the client

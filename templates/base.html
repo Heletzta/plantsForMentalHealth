@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}">
+    
+<div class="topnav">
+    <ul>
+        <li><a href="{{url_for('home')}}">Journal</a></li>
+        <li><a href="{{url_for('getBerkeleyEventsStored')}}">Events</a></li>
+        <li><a href="{{url_for('Garden')}}">Garden</a></li>
+        <li><a href="{{url_for('home')}}">Home</a></li>
+        <li><a href="{{url_for('logout_user')}}">Logout</a></li>
+    </ul>
+</div>
+</head>
+
+<div class="login">
+    {% block content %} {% endblock %}
+  </div>
+
+
+</html>

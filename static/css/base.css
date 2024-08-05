@@ -1,0 +1,73 @@
+/* TOP NAVIGATION BAR STYLING */
+
+
+/*Add a green background color to the top navigation bar*/
+.topnav {
+    background-color: #B0FF74;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: right;
+    color: #333;
+    font-family: 'Tahoma';
+    letter-spacing: 1.5px;
+    text-align: center;
+    padding: 16px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color:#04AA6D;
+    color: white;
+}
+
+    
+
+/* Add a color to the active/current link */
+/* curently only works with the home page!*/
+.topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.topnav ul li {
+    display: inline-block;
+} 
+
+.topnav ul {
+    list-style: none;
+    text-align: center;
+
+}
+
+
+body {
+    font-family: 'Tahoma';
+    letter-spacing: 1.5px;
+    background-color: #EFF9F5;
+}
+.login {
+    width: 100%;
+    height: 800px;
+    background: url(https://help.gardeningexpress.co.uk/wp-content/uploads/2023/04/Untitled-design-1.png);
+    /*linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)
+    ),    url(https://help.gardeningexpress.co.uk/wp-content/uploads/2023/04/Untitled-design-1.png);*/
+    box-sizing: border-box;
+    padding: 30px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  
+  
+  /*display: flex;*/
+}
