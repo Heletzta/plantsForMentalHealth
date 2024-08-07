@@ -5,18 +5,20 @@
     
 <div class="topnav">
     <ul>
-        <li><a href="{{url_for('home')}}">Journal</a></li>
+        <li><a href="{{url_for('journal')}}">Journal</a></li>
         <li><a href="{{url_for('getBerkeleyEventsStored')}}">Events</a></li>
         <li><a href="{{url_for('Garden')}}">Garden</a></li>
         <li><a href="{{url_for('home')}}">Home</a></li>
         <li><a href="{{url_for('logout_user')}}">Logout</a></li>
     </ul>
 </div>
+
+    {% block js %} {% endblock %}
 </head>
 
-<div class="login">
+<body class="login" {% block action %} {% endblock %}>
     {% block content %} {% endblock %}
-  </div>
+</body>
 
 
 </html>

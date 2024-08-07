@@ -152,6 +152,10 @@ def login():
 def Garden():
    return render_template('Garden.html')
 
+@app.route('/Journal')
+def journal():
+    return render_template('Journal.html')
+
 # fetches the last run data, make take a while
 @app.route('/getberkeleyEventsFetch', methods=['GET'])
 def getBerkeleyEventsFetch():
@@ -176,7 +180,9 @@ def getURL():
     with open('tmp/events.json', 'r', encoding="utf-8") as f:
         return redirect(json.loads(f.read())['Titles'][0]['url'], code=302)
 
-
+@app.route('/enterJournalEntry', methods=['POST'])
+def enterJournalEntry():
+    return render_template('Journal.html', e='1')
 
 
 print("STARTED PYTHON WEBSERVICE")

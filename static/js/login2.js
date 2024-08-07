@@ -9,7 +9,7 @@ function window_onload() {
     } else if (document.getElementById("error").value == '2') {
         setFormMessage(loginForm, "error", "Username does not exist!");
     } else if (document.getElementById("error").value == '3') {
-        setFormMessage(loginForm, "error", "Your account has been created! Please login here.");
+        setFormMessage(loginForm, "success", "Your account has been created! Please login here.");
     }
     /*const loginForm = document.querySelector("#login");
     var map = parseLink();
@@ -71,7 +71,7 @@ function setFormMessage(formElement, type, message) {
     const messageElement = formElement.querySelector(".form__message");
 
     messageElement.textContent = message;
-    messageElement.classList.remove("form__mesaage--success", "form__message--error");
+    messageElement.classList.remove("form__message--success", "form__message--error");
     messageElement.classList.add('form__message--${type}');
 }
 
