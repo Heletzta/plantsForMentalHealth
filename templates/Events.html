@@ -1,6 +1,10 @@
 
 {% extends "base.html" %}
 
+{% block action %}
+class = "events"
+{% endblock %}
+
 {% block content %}
     {% for event in events %}
         <p style="font-size: 20px; text-align: left; color: #EFF9F5;">{{event['name']}}</p>

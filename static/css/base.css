@@ -71,3 +71,21 @@ body {
   
   /*display: flex;*/
 }
+
+
+.events {
+    width: 100%;
+    background: #04AA6D;
+    /*linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)
+    ),    url(https://help.gardeningexpress.co.uk/wp-content/uploads/2023/04/Untitled-design-1.png);*/
+    box-sizing: border-box;
+    padding: 30px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    
+    /*display: flex;*/
+}
