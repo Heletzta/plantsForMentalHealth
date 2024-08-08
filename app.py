@@ -130,7 +130,8 @@ def getUser():
     """
     cnx = connect()
     cursor = cnx.cursor()
-    query = f'SELECT firstName, lastName FROM users WHERE userID = {request.args.get('id')};'
+    id = request.args.get('id')
+    query = f'SELECT firstName, lastName FROM users WHERE userID = {id};'
     cursor.execute(query)
     records = cursor.fetchall()
     name = records[0][0] + " " + records[0][1]
