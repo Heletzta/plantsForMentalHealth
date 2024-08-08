@@ -7,19 +7,19 @@ import ssl
 import requests
 import mysql.connector
 from cryptography.fernet import Fernet
+import configuration
 
 
 
 app = Flask(__name__)
 app.secret_key = "hello"
 
-
 def connect():
     cnx = mysql.connector.connect(
-        user="tami",
-        password="lac00caracha!Yay",
-        host="localhost",
-        database="myDB",
+        user=configuration.SETTINGS['user'],
+        password=configuration.SETTINGS['password'],
+        host=configuration.SETTINGS['host'],
+        database=configuration.SETTINGS['database'],
         connection_timeout=10000
     ) 
     return cnx

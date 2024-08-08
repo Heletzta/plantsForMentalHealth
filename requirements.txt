@@ -6,3 +6,4 @@ ParseHub
 Task Scheduler
 cryptography
 requests
+configparser
