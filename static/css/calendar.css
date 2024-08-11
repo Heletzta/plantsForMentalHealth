@@ -1,0 +1,272 @@
+
+/* root represents the whole document. Any variable specified here will
+apply to the whole document, and can be used anywhere in the css file */
+:root {
+    /* the -- denotes that we are creating our own attribute, a custom attribute*/
+    /* to reference the attribute, type var(attribute_name)*/
+    --primary-clr: #b38add;
+
+}
+
+/* * is the universal selector. Used to reset attributes on different browsers
+For example, some browsers haave different padding and margins, so we can set 
+them to zero so we always have the same margin and padding no matter which browser is used*/
+* {
+    /*margin specifies what location a specific element starts on, from the top down*/
+    /* a margin is the space between an element's border */
+    /*margin: 0;*/
+    /*padding is the space between an element's border and the element's content*/
+    /*padding: 0;*/
+    /* define ow you want the height and width of an element to be calculated*/
+    /* you can speify whether or not you want the padding or border of the element to be included 
+    in the height and width or not!*/
+    /* either a content box, or a border box
+    content-box is default, border box includes border / padding in the total height / width */
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    /* vh means viewport height. 1vh is 1% of viewport height */
+    min-height: 100vh; 
+    /* specifies the display behavior */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e2e1dc;
+}
+.calContainer{
+    position: relative;
+    width: 1200px;
+    min-height: 550px;
+    margin: 0 auto;
+    padding: 5px;
+    color: #fff;
+    display: flex;
+    border-radius: 10px;
+    background-color: #04AA6D;
+    /*background-color:#373c4f;*/
+
+}
+
+
+.left {
+    width: 60%;
+    padding: 20px;
+}
+.calendar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /* set th direction of the flex container's main axis -- arranges items vertically going down in this case*/
+    flex-direction: column;
+    /* controls how the flex items behave when the flex container is too small -- in this case, they wrap into multiple lines! */
+    flex-wrap: wrap;
+    /* defines how the browser distributes space between and around content items along the main axis of a flex container */
+    /* for space between, the items are evenly distributed within the alignment container along the main axis
+    Spacing between each pair of adjacent items is the same
+    the first item is flush with the main-start edge, and then last item is flush with the main-end edge*/
+    justify-content: space-between;
+    color: #878895;
+    border-radius: 5px;
+    background-color: #fff;
+
+}
+
+/*add content to the named element but before or after the content in that element, and not before the element itself*/
+.calendar::before, 
+.calendar::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 12px;
+    height: 97%;
+    border-radius: 0 5px 5px 0;
+    background-color: #d3d5d6d7;
+    /* allows you to rotate, scale, skew, or translate an element*/
+    /* translates it a little to the right to make a shadow for the calendar! */
+    transform: translateY(-50%);
+
+}
+
+/* makes a third shadow -- make it look like many month calendars behind it! */
+.calendar::before {
+    height: 94%;
+    /* calc function helps you mix different types of units to calculate a value*/
+    left: calc(100% + 12px);
+    background-color: rgb(130, 170, 150);
+}
+
+.calendar .month {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    /* capitalizes each word in the text */
+    text-transform: capitalize;
+}
+
+.calendar .month .prev:hover,
+.calendar .month .next:hover {
+    color: var(--primary-clr);
+}
+
+/* this might be removed????? */
+.calendar .weekdays {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: capitalize;
+
+}
+.calendar .weekdays div {
+    width: 14.28%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.calendar .days {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.calendar .days .day {
+    width: 14.28%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--primary-clr);
+    border: 1px solid #f5f5f5;
+}
+
+.calendar .day:not(.prev-date, .next-date):hover {
+    color: #fff;
+    background-color: var(--primary-clr);
+}
+.calendar .days .prev-date, 
+.calendar .days .next-date {
+    color: #b3b3b3;
+}
+
+.calendar .days .active {
+    position: relative;
+    font-size: 2rem;
+    color: #fff;
+    background-color: var(--primary-clr);
+}
+
+.calendar .days .active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:  100%;
+    box-shadow: 0 0 10px 2px var(--primary-clr);
+}
+
+.calendar .days .today {
+    font-size: 2rem;
+}
+
+/* for events !!!!! */
+.calendar .days .event {
+    position: relative;
+}
+
+.calendar .days .event::after {
+    content: '';
+    position: absolute; 
+    bottom: 10%;
+    left: 50%;
+    width: 75%;
+    height: 6px;
+    border-radius: 30px;
+    transform: translate(-50%);
+    background-color: var(--primary-clr);
+}
+
+.calendar .event:hover::after {
+    background-color: #fff;
+}
+
+
+.calendar .active:hover::after {
+    background-color: #fff;
+    bottom: 20%;
+}
+
+.calendar .active.event {
+    padding-bottom: 10px;
+}
+
+.calendar .goto-today {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    color: var(--primary-clr);
+}
+
+.calendar .goto-today .goto {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid var(--primary-clr);
+}
+
+.calendar .goto-today .goto input {
+    width: 100%;
+    height: 30px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 0 20px;
+    color: var(--primary-clr);
+}
+.calendar .goto-today button {
+    padding: 5px 10px;
+    border: 1px solid var(--primary-clr);
+    border-radius: 5px;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--primary-clr);
+}
+
+.calendar .goto-today button::hover {
+    color: #fff;
+    background-color: var(--primary-clr);
+}
+
+.calendar .goto-today .goto button {
+    border: none;
+    border-left: 1px solid var(--primary-clr);
+    border-radius: 0;
+}

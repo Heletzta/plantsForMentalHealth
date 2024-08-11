@@ -3,6 +3,7 @@
 {% block js %}
 <script src="{{url_for('static', filename='js/journal.js')}}"></script>
 <link rel="stylesheet" href="{{url_for('static', filename='css/journal.css')}}">
+
 {% endblock %}
 
 
@@ -12,17 +13,18 @@ class = "login" onload="submitted()"
 {% endblock %}
 
 {% block content %} 
-    
     <div class = "container" name = "journal" id = "journal" >
         <p id="status" class = "form__title" style="font-size: 20px; text-align: center; color: black;"> What do you want to write today? </p>
         <div class="form__message form__message--error"> </div>
         <form class="form" id="journalEntry" action="{{url_for('enterJournalEntry')}}" method="post">
-            <input type="date" class="form__input_date" required> </input>
+            <input type="date" class="form__input_date" id = "date" name = "date" required> </input>
             <textarea class="form__input" id = "entry" name = "entry" placeholder="Dear Diary, ...."> </textarea>  
             <button id = "submitButton" class = "form__button" type="submit" >Enter</button>
         </form>
         <input type = "hidden" id="entered" name = "entered" value = "{{e}}">
     </div>
+
+    
 {% endblock %}
 
 

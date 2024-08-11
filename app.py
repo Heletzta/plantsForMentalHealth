@@ -83,6 +83,7 @@ def createAccountMethod():
     email = request.form['Email']
     encryptedPassword = fernet.encrypt(password.encode()).decode()
     #encryptedPassword = "'" + encryptedPassword + "'"
+    #query = f'insert into users (firstName, lastName, email, username, userPassword, adminOrNot) values ("{firstname}", "{lastname}", "{email}", "{username}", "{encryptedPassword}", false);'
     query = f'insert into users (firstName, lastName, email, username, userPassword, adminOrNot) values ("{firstname}", "{lastname}", "{email}", "{username}", "{encryptedPassword}", false);'
     cursor.execute(query)
     cnx.commit()
@@ -173,7 +174,9 @@ def getBerkeleyEventsFetch():
 @app.route('/getberkeleyEventsStored', methods=['GET'])
 def getBerkeleyEventsStored():
   with open('tmp/events.json', 'r', encoding="utf-8") as f:
-    return render_template('Events.html', events=json.loads(f.read())['Titles'])
+    events=json.loads(f.read())['Titles']
+    e = json.dumps(events).replace("\n", " ")
+    return render_template('Events.html',events=events, e = e)
 
 
 @app.route('/getURL', methods=['GET'])
@@ -183,6 +186,14 @@ def getURL():
 
 @app.route('/enterJournalEntry', methods=['POST'])
 def enterJournalEntry():
+    date = request.form['date']
+    entry = fernet.encrypt(request.form['entry'].encode()).decode()
+    cnx = connect()
+    cursor = cnx.cursor()
+    query = f'insert into journalEntries (userID, entryDate, entry) values ({session['userID']}, "{date}", "{entry}");'
+    cursor.execute(query)
+    cnx.commit()
+    cursor.close
     return render_template('Journal.html', e='1')
 
 

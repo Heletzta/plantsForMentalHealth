@@ -1,13 +1,64 @@
 
 {% extends "base.html" %}
 
-{% block action %}
-class = "events"
+
+
+{% block js %} 
+
+
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/calendar.css')}}">
+
+<title>Calendar with Events</title>
+
+
+
 {% endblock %}
 
 {% block content %}
-    {% for event in events %}
+    <div class="calContainer">
+        <div class="left"> 
+            <div class="calendar"> 
+                <div class="month">
+                    <i class="fa fa-angle-left prev"></i>
+                    <div class = "date"> november 22 </div>
+                    <i class="fa fa-angle-right next"></i>
+                </div>
+                <div class="weekdays">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="days"></div>
+                <div class="goto-today">
+                    <div class="goto">
+                        <input type="text" placeholder="mm/yyyy" class="date-input" />
+                        <button class="goto-btn">Go</button>
+                    </div>
+                    <button class="today-btn">Today</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <script src="{{url_for('static', filename='js/calendar.js')}}"></script>
+
+
+
+<input type = "hidden" id = "eventsVal" name = "eventsVal" value = "{{e}}"></input>
+<script type = "text/javascript"> 
+    var eventsJS = JSON.parse(document.getElementById("eventsVal").value);
+    const result = eventsJS.filter(eventsJS => eventsJS.name.indexOf("Exhibit") != -1);
+    console.log(result);
+</script>
+    <!--{% for event in events %}
         <p style="font-size: 20px; text-align: left; color: #000000;">{{event['name']}}</p>
         <p style="text-align: left; color: #000000;">{{event['Description']}}</p>
-    {% endfor %}
+    {% endfor %}-->
+
+    
 {% endblock %}
