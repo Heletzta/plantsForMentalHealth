@@ -10,6 +10,11 @@ const todayBtn = document.querySelector(".today-btn");
 const gotoBtn = document.querySelector(".goto-btn");
 const dateInput = document.querySelector(".date-input");
 
+// right side date
+const daySpec = document.querySelector(".event-day");
+const dateSpec = document.querySelector(".event-date");
+
+
 
 
 let today = new Date();
@@ -44,7 +49,7 @@ function initCalendar() {
     const lastDate = lastDay.getDate();
     const  day = firstDay.getDay();
 
-    const nextDays = 7 - lastDay.getDay() - 1;
+    const nextDays = 7 - lastDay.getDay();
 
     //update date at the top of the calendar
     date.innerHTML = months[month] + " " + year;
@@ -58,23 +63,25 @@ function initCalendar() {
     }
 
     //current month days
-    for (let i = 1; i < lastDate; i++) {
+    for (let i = 1; i <= lastDate; i++) {
         // if day is today, add class today
         if (i === new Date().getDate() 
             && year === new Date().getFullYear() 
         && month === new Date().getMonth()) {
-            days += `<div class = "day today" >${i}</div>`
+            days += `<div class = "day today active" >${i}</div>`
         } else {
             days += `<div class = "day" >${i}</div>`
         }
     }
 
     // next month days
-    for (let j = 1; j <= nextDays; j++) {
-        days += `<div class = "day next-day" >${j}</div>`
+    for (let j = 1; j < nextDays; j++) {
+        days += `<div class = "day next-date" >${j}</div>`
     }
 
     daysContainer.innerHTML = days;
+    // add listener for clicking on a day after the calendar is initialized
+    dayClick();
 
 }
 
@@ -150,3 +157,62 @@ function gotoDate() {
     }
     alert("invalid date");
 }    
+
+
+function dayClick() {
+    const days = document.querySelectorAll(".day");
+    days.forEach((day) => {
+        day.addEventListener("click", (e) => {
+            //set current day as active day
+            activeDay = Number(e.target.innerHTML);
+            //remove active from already active day
+            days.forEach((day) => {
+                day.classList.remove("active");
+            });
+
+            //if prev month day clicked goto prev month and add active to clicked
+            if (e.target.classList.contains("prev-date")) {
+                prevMonth();
+                setTimeout(() => {
+                    //select all days of that month
+                    const days = document.querySelectorAll(".day");
+                    
+                    // after going to prev month, add active to clicked
+                    days.forEach((day) => {
+                        if (!day.classList.contains("prev-date") && day.innerHTML === e.target.innerHTML) {
+                            day.classList.add("active");
+                        }
+                    });
+                }, 100);
+            }
+            //same with next month days
+            else if (e.target.classList.contains("next-date")) {
+                nextMonth();
+                setTimeout(() => {
+                    //select all days of that month
+                    const days = document.querySelectorAll(".day");
+                    
+                    // after going to prev month, add active to clicked
+                    days.forEach((day) => {
+                        if (!day.classList.contains("next-date") && day.innerHTML === e.target.innerHTML) {
+                            day.classList.add("active");
+                        }
+                    });
+                }, 100);
+            }
+            //remaining current month days
+            else {
+                e.target.classList.add("active");
+            }
+        });
+    });
+
+}
+
+
+
+//show active date at the top right
+function getActiveDay (date) {
+    const day = new Date(year, month, date);
+    const dayName = day.toString().split(" ")[0];
+}

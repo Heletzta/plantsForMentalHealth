@@ -153,7 +153,7 @@ body {
 
 .calendar .days .day {
     width: 14.28%;
-    height: 50px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -187,6 +187,8 @@ body {
     height:  100%;
     box-shadow: 0 0 10px 2px var(--primary-clr);
 }
+
+
 
 .calendar .days .today {
     font-size: 2rem;
@@ -298,7 +300,11 @@ body {
     text-transform: capitalize;
 }
 
-.today-date .event-day {
+
+
+
+/* unrelated things from video */
+/*.today-date .event-day {
     font-size: 2rem;
     font-weight: 500;
 }
@@ -306,7 +312,7 @@ body {
 .today-date .event-date {
     font-size: 1rem;
     font-weight: 400;
-    color: #fff; /* adjust */
+    color: #fff; /* adjust 
 }
 
 
@@ -324,7 +330,7 @@ body {
 .events .event {
     position: relative;
     width: 95%;
-    min-height: 70px; /*adjust 70*/
+    min-height: 70px; /*adjust 70
     display: flex;
     align-items: center;
     justify-content: center;
@@ -332,13 +338,13 @@ body {
     gap: 5px;
     padding:  0 20px;
     padding-left: 50px;
-    color: #fff; /*adjust*/
-    background: linear-gradient(90deg, #3f4458, transparent); /*adjust*/
+    color: #fff; /*adjust
+    background: linear-gradient(90deg, #3f4458, transparent); /*adjust
     cursor: pointer;
 }
 
 
-/* not sure what this does */
+/* not sure what this does 
 .events .event:nth-child(even) {
     background: transparent;
 }
@@ -350,7 +356,7 @@ body {
 .events .event .title {
     display: flex;
     align-items: center;
-    pointer-events: none; /* not sure what this does */
+    pointer-events: none; /* not sure what this does 
 }
 
 .events .event .title .even-title {
@@ -366,7 +372,7 @@ body {
 }
 
 .events .event:hover .title {
-    color: #fff; /*adjust*/
+    color: #fff; /*adjust
 }
 
 .events .event .title .event-time {
@@ -382,7 +388,7 @@ body {
 }
 
 .event::after {
-    content: "✓"; /*adjust!!!!!!*/
+    content: "✓"; /*adjust!!!!!!
     position: absolute;
     top: 50%;
     right: 0;
@@ -404,7 +410,7 @@ body {
 
 /* adjust as needed !!!!!!*/
 
-/* adding events */
+/* adding events 
 
 .add-event-wrapper {
     position: absolute;
@@ -414,24 +420,24 @@ body {
     max-height: 0;
     overflow: hidden;
     border-radius: 5px;
-    background-color: #fff; /*adjust*/
+    background-color: #fff; /*adjust
     transform: translateX(-50%);
-    transition: max-height 0.5s ease; /*not sure what this does*/
+    transition: max-height 0.5s ease; /*not sure what this does
 }
 
 .add-event-wrapper.active {
-    max-height: 200px; /*adjust plz!! */
+    max-height: 200px; /*adjust plz!! 
 }
 
 .add-event-header {
     width: 100%;
-    height: 50px; /*adjust*/
+    height: 50px; /*adjust
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
-    color: #373c4f; /*adjust*/
-    border-bottom: 1px solid #f5f5f5; /*adjust*/
+    color: #373c4f; /*adjust
+    border-bottom: 1px solid #f5f5f5; /*adjust
 }
 
 .add-event-header .close {
@@ -459,7 +465,7 @@ body {
 
 .add-event-body .add-event-input {
     width: 100%;
-    height: 40px; /*adjust*/
+    height: 40px; /*adjust
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -471,11 +477,11 @@ body {
     height: 100%;
     outline: none;
     border: none;
-    border-bottom: 1px solid #f5f5f5; /*adjust*/
+    border-bottom: 1px solid #f5f5f5; /*adjust
     padding: 0 10px;
     font-size: 1rem;
     font-weight: 400;
-    color: #373c4f; /*adjust*/
+    color: #373c4f; /*adjust
 }
 
 .add-event-body .add-event-input input::placeholder {
@@ -490,3 +496,4 @@ body {
     color: var(--primary-clr);
 }
 
+*/
