@@ -58,6 +58,7 @@ body {
 .login {
     width: 100%;
     height: 800px;
+    max-height: 500px;
     background: url(https://help.gardeningexpress.co.uk/wp-content/uploads/2023/04/Untitled-design-1.png);
     /*linear-gradient(
         to right,
