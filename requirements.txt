@@ -2,8 +2,11 @@ waitress
 Flask
 Python
 mysql-connector-python
-ParseHub
-Task Scheduler
 cryptography
 requests
 configparser
+
+
+Other:
+ParseHub
+Task Scheduler

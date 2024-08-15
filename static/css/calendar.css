@@ -53,7 +53,7 @@ body {
 
 
 .left {
-    width: 60%;
+    width: 50%;
     padding: 20px;
 }
 .calendar {
@@ -270,4 +270,221 @@ body {
     border: none;
     border-left: 1px solid var(--primary-clr);
     border-radius: 0;
+}
+
+
+
+
+/*events / entries section */
+.calContainer .right {
+    position: relative;
+    width: 40%;
+    min-height: 100%;
+    /*padding removed*/
+}
+.right .today-date {
+    width: 100%;
+    height: 50px; /* might have to adjust this */ /*50*/
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    padding-left: 70px;
+    /*margin-top: 50px; /* adjust 50*/
+    /*margin-bottom: 20px; /* adjust 20*/
+    text-transform: capitalize;
+}
+
+.today-date .event-day {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.today-date .event-date {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #878895; /* adjust */
+}
+
+
+.events{
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+}
+
+.events .event {
+    position: relative;
+    width: 95%;
+    min-height: 70px; /*adjust 70*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    padding:  0 20px;
+    padding-left: 50px;
+    color: #fff; /*adjust*/
+    background: linear-gradient(90deg, #3f4458, transparent); /*adjust*/
+    cursor: pointer;
+}
+
+
+/* not sure what this does */
+.events .event:nth-child(even) {
+    background: transparent;
+}
+
+.events .event:hover {
+    background: linear-gradient(90deg, var(--primary-clr), transparent);
+}
+
+.events .event .title {
+    display: flex;
+    align-items: center;
+    pointer-events: none; /* not sure what this does */
+}
+
+.events .event .title .even-title {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-left: 20px;
+}
+
+.events .event .title i,
+.events .event:hover  .event-time {
+    color: var(--primary-clr);
+    font-size: 0.5rem;
+}
+
+.events .event:hover .title {
+    color: #fff; /*adjust*/
+}
+
+.events .event .title .event-time {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #878895;
+    margin-left: 15px;
+    pointer-events: none;
+}
+
+.events .event:hover .event-time {
+    color: #fff;
+}
+
+.event::after {
+    content: "✓"; /*adjust!!!!!!*/
+    position: absolute;
+    top: 50%;
+    right: 0;
+    font-size: 3rem;
+    line-height: 1;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.3;
+    color: var(--primary-clr);
+    transform: translate(-50%);
+}
+
+.events .event:hover::after {
+    display: flex;
+}
+
+
+
+/* adjust as needed !!!!!!*/
+
+/* adding events */
+
+.add-event-wrapper {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    width: 90%;
+    max-height: 0;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: #fff; /*adjust*/
+    transform: translateX(-50%);
+    transition: max-height 0.5s ease; /*not sure what this does*/
+}
+
+.add-event-wrapper.active {
+    max-height: 300px; /*adjust plz!! */
+}
+
+.add-event-header {
+    width: 100%;
+    height: 50px; /*adjust*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    color: #373c4f; /*adjust*/
+    border-bottom: 1px solid #f5f5f5; /*adjust*/
+}
+
+.add-event-header .close {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.add-event-header .close:hover {
+    color: var(--primary-clr);
+}
+
+.add-event-header .title {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.add-event-body {
+    width: 100%;
+    height:  100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px;
+}
+
+.add-event-body .add-event-input {
+    width: 100%;
+    height: 40px; /*adjust*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.add-event-body .add-event-input input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #f5f5f5; /*adjust*/
+    padding: 0 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #373c4f; /*adjust*/
+}
+
+.add-event-body .add-event-input input::placeholder {
+    color: #a5a5a5;
+}
+
+.add-event-body .add-event-input input:focus {
+    border-color: var(--primary-clr);
+}
+
+.add-event-body .add-event-input input:focuss::placeholder {
+    color: var(--primary-clr);
 }
