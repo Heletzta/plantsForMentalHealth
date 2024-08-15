@@ -265,7 +265,7 @@ body {
 }
 
 .today-date button {
-    background: var(--primary-clr);
+    background: #238b65;
     border: 1px solid white;
     color: white;
 }
