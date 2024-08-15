@@ -245,8 +245,7 @@ function dayClick() {
 function getActiveDay(date) {
     const day = new Date(year, month, date);
     const dayName = day.toString().split(" ")[0];
-    eventDay.innerHTML = dayName;
-    eventDate.innerHTML = date + " " + months[month] + " " + year;
+    eventDay.innerHTML = dayName + ", " + date + " " + months[month] + " " + year;
 }
 
 
@@ -256,12 +255,6 @@ function updateEvents(date) {
     let events = "";
     //get events of active day only
     eventsArr.forEach((event) => {
-        console.log(date);
-        console.log(month +  1);
-        console.log(year);
-        console.log(event.day);
-        console.log(event.month);
-        console.log(event.year);
         if (date === event.day && month + 1 === event.month && Number(year) === event.year) {
             //then show event on document
             event.events.forEach((event) =>  {

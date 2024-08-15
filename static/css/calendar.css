@@ -254,13 +254,20 @@ body {
     padding: 0 20px;
     color: var(--primary-clr);
 }
-.calendar .goto-today button {
+
+.calendar .goto-today button, .today-date button {
     padding: 5px 10px;
     border: 1px solid var(--primary-clr);
     border-radius: 5px;
     background-color: transparent;
     cursor: pointer;
     color: var(--primary-clr);
+}
+
+.today-date button {
+    background: var(--primary-clr);
+    border: 1px solid white;
+    color: white;
 }
 
 .calendar .goto-today button::hover {
@@ -286,7 +293,7 @@ body {
 }
 .right .today-date {
     width: 100%;
-    height: 30px; /* might have to adjust this */ /*50*/
+    height: auto; /* might have to adjust this */ /*50*/
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -302,7 +309,7 @@ body {
 
 /* unrelated things from video */
 .today-date .event-day {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 
@@ -430,11 +437,11 @@ body {
 
 /* adjust as needed !!!!!!*/
 
-/* adding events 
-
+ /*adding events */
+/*
 .add-event-wrapper {
     position: absolute;
-    bottom: 100px;
+    bottom: 200px;
     left: 50%;
     width: 90%;
     max-height: 0;
@@ -442,11 +449,11 @@ body {
     border-radius: 5px;
     background-color: #fff; /*adjust
     transform: translateX(-50%);
-    transition: max-height 0.5s ease; /*not sure what this does
-}
+    transition: max-height 0.5s ease; /*not sure what this does*
+
 
 .add-event-wrapper.active {
-    max-height: 200px; /*adjust plz!! 
+    max-height: 500px; /*adjust plz!! 
 }
 
 .add-event-header {
@@ -473,6 +480,8 @@ body {
     font-size: 1.2rem;
     font-weight: 500;
 }
+
+/*
 
 .add-event-body {
     width: 100%;
