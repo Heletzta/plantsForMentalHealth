@@ -280,10 +280,9 @@ body {
 /*events / entries section */
 .calContainer .right {
     position: relative;
-    width: 40%;
+    width: 50%;
     min-height: 100%;
-    /*padding: 20px 0;*/
-    /*padding removed*/
+    padding: 20px 0;
 }
 .right .today-date {
     width: 100%;
@@ -295,16 +294,14 @@ body {
     justify-content: space-between;
     padding: 0 40px;
     padding-left: 70px;
-    margin-top: 20px; /* adjust 50*/
+    margin-top: 30px; /* adjust 50*/
     margin-bottom: 20px; /* adjust 20*/
     text-transform: capitalize;
 }
 
 
-
-
 /* unrelated things from video */
-/*.today-date .event-day {
+.today-date .event-day {
     font-size: 2rem;
     font-weight: 500;
 }
@@ -312,14 +309,14 @@ body {
 .today-date .event-date {
     font-size: 1rem;
     font-weight: 400;
-    color: #fff; /* adjust 
+    color: #fff;
 }
 
 
 .events{
     width: 100%;
     height: 100%;
-    max-height: 600px;
+    max-height: 450px;
     overflow-x: hidden;
     overflow-y: auto;
     display: flex;
@@ -327,58 +324,81 @@ body {
     padding: 4px;
 }
 
+.events .no-event {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #fff;
+  }
+
 .events .event {
     position: relative;
     width: 95%;
-    min-height: 70px; /*adjust 70
+    min-height: 70px; /*adjust 70*/
     display: flex;
-    align-items: center;
+    /*align-items: center;*/
     justify-content: center;
     flex-direction: column;
     gap: 5px;
     padding:  0 20px;
     padding-left: 50px;
-    color: #fff; /*adjust
-    background: linear-gradient(90deg, #3f4458, transparent); /*adjust
+    padding-bottom: 10px;
+    color: #fff; /*adjust*/
+    background: var(--primary-clr);
+    
     cursor: pointer;
 }
 
 
-/* not sure what this does 
-.events .event:nth-child(even) {
+ /*not sure what this does */
+/*.events .event:nth-child(even) {
     background: transparent;
-}
+}*/
 
 .events .event:hover {
-    background: linear-gradient(90deg, var(--primary-clr), transparent);
+    background: linear-gradient(90deg, rgb(36, 137, 104), transparent); /*adjust*/
+    /*background: linear-gradient(90deg, pink, transparent);*/
 }
 
 .events .event .title {
     display: flex;
     align-items: center;
-    pointer-events: none; /* not sure what this does 
+    pointer-events: none; /* not sure what this does */
 }
 
-.events .event .title .even-title {
+.events .event .title .event-title {
     font-size: 1rem;
     font-weight: 400;
     margin-left: 20px;
 }
 
-.events .event .title i,
+.events .event i {
+    color: #fff;
+    font-size: 0.5rem;    
+}
+
+.events .event:hover i {
+    color: #fff; /*adjust*/
+}
+
+/*.events .event .title i,
 .events .event:hover  .event-time {
     color: var(--primary-clr);
     font-size: 0.5rem;
-}
+}*/
 
-.events .event:hover .title {
+/*.events .event:hover .title {
     color: #fff; /*adjust
-}
+}*/
 
-.events .event .title .event-time {
+.events .event .event-time {
     font-size: 0.8rem;
     font-weight: 400;
-    color: #878895;
+    color: #fff;
     margin-left: 15px;
     pointer-events: none;
 }
@@ -387,8 +407,8 @@ body {
     color: #fff;
 }
 
-.event::after {
-    content: "✓"; /*adjust!!!!!!
+.events .event::after {
+    content: "✓"; /*adjust!!!!!!*/
     position: absolute;
     top: 50%;
     right: 0;
