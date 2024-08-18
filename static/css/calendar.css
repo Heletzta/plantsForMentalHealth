@@ -24,7 +24,7 @@ them to zero so we always have the same margin and padding no matter which brows
     /* either a content box, or a border box
     content-box is default, border box includes border / padding in the total height / width */
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Poppins";
 }
 
 body {
