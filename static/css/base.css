@@ -16,7 +16,7 @@
 /* Style the links inside the navigation bar */
 .topnav a {
     color: #333;
-    font-family: 'Tahoma';
+    font-family: "Poppins";
     letter-spacing: 1.5px;
     text-align: center;
     padding: 3px 15px;
@@ -56,11 +56,12 @@
 }
 
 
+
 body {
     margin: 0;
     height: 100vh;
     font-size: 15px;
-    font-family: 'Tahoma';
+    font-family: "Poppins";
     letter-spacing: 1.5px;
     background-color: #EFF9F5;
 }
@@ -169,3 +170,11 @@ body {
     cursor: pointer;
 }
 
+
+
+.login .center {
+    position: relative;
+    top: 70px;
+    margin: auto;
+
+}

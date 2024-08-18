@@ -31,7 +31,8 @@ body {
 .container,
 .form__input,
 .form__button {
-    font: 500 1rem 'Roboto', sans-serif;
+    font-family: "Poppins", sans-serif;;
+    /*font: 500 1rem 'Roboto', sans-serif;*/
 }
 
 .form--hidden {

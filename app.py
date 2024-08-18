@@ -187,10 +187,13 @@ def getURL():
 @app.route('/enterJournalEntry', methods=['POST'])
 def enterJournalEntry():
     date = request.form['date']
+    title = fernet.encrypt(request.form['title'].encode()).decode()
     entry = fernet.encrypt(request.form['entry'].encode()).decode()
+    journal = request.form['journal']
     cnx = connect()
     cursor = cnx.cursor()
-    query = f'insert into journalEntries (userID, entryDate, entry) values ({session['userID']}, "{date}", "{entry}");'
+    # MAKE A NEW QUERY TO GET THE ID OF THE JOUNRAL!! OR FIGURE OUT HOW TO SEND IT?????? TITLES NEED TO BE UNIQUE
+    query = f'insert into journalEntries (userID, entryDate, entry) values ({session['userID']}, "{journal}", "{title}", "{date}", "{entry}");'
     cursor.execute(query)
     cnx.commit()
     cursor.close

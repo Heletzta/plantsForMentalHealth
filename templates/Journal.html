@@ -91,10 +91,12 @@ class = "login" onload="submitted()"
 
 <div id="entries" name ="entries" class="entryForm entryForm--hidden">
     <button class = "backButton" onclick="goToMainPage()"> <i class="fa-solid fa-arrow-left-long"></i> Back</button>
-    <p id="status" class = "form__title" style="font-size: 20px; text-align: center; color: black;"> What do you want to write today? </p>
+    <p id="status" class = "form__title" style="font-size: 20px; text-align: center; color: white; font-family: Poppins sans-serif;"> What do you want to write today? </p>
     <div class="form__message form__message--error"> </div>
     <form class="form" id="journalEntry" action="{{url_for('enterJournalEntry')}}" method="post">
         <input type="date" class="form__input_date" id = "date" name = "date" required> </input>
+        <label for="journal" style = "color: white; font-family: Poppins sans-serif;">Choose a journal:</label>
+        <select class="form__input_date" id="journal" name="journal" required> </select>
         <input type="text" class="form__input_date" id ="title" name="title" autofocus placeholder="Title"> </input>
         <input type="text" class="form__input" id="entry" name="entry" autofocus placeholder="Dear Diary, ..."> </input>
         <!--<textarea class="form__input" id = "entry" name = "entry" placeholder="Dear Diary, ...."> </textarea> -->
