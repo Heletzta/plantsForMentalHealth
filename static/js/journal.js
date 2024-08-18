@@ -26,3 +26,5 @@ function goToMainPage() {
     container.classList.remove("entryForm--hidden");
     entryForm.classList.add("entryForm--hidden");
 }
+
+
