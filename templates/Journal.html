@@ -18,6 +18,15 @@ class = "login" onload="submitted()"
 
 {% block content %} 
 
+
+<div class = "topButtons">
+    <button id="newEntry" name="newEntry" onclick="makeNewEntry()">New Entry</button>
+    <button>New Journal</button>
+    <button>See All Journals</button>
+</div>
+
+
+
 <div class="calContainer">
     <div class="left"> 
         <div class="calendar"> 
@@ -48,7 +57,9 @@ class = "login" onload="submitted()"
     <div class = "right">
         <div class="today-date">
             <div class="event-day"></div>
-            <button>New Entry</button>
+            <!--<button>New Entry</button>
+            <button>New Journal</button>
+            <button>See All Journals</button>-->
             <!--<div class="event-date"></div>-->
         </div>
         <div class="events"></div>

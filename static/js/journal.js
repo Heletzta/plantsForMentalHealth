@@ -7,3 +7,7 @@ function submitted() {
 
 }
 
+
+function makeNewEntry() {
+    
+}

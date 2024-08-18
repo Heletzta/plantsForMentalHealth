@@ -38,7 +38,7 @@ body {
 }
 .calContainer{
     position: relative;
-    width: 1200px;
+    width: 1400px;
     min-height: 550px;
     max-height: 550px;
     margin: 0 auto;
@@ -48,7 +48,19 @@ body {
     border-radius: 10px;
     background-color: #04AA6D;
     /*background-color:#373c4f;*/
+}
 
+
+.topButtons {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: center;
+    
+    position: fixed;
+    top: 30px;
+    height: 30px;
+    align-self: center;
 }
 
 
@@ -255,7 +267,7 @@ body {
     color: var(--primary-clr);
 }
 
-.calendar .goto-today button, .today-date button {
+.calendar .goto-today button, .topButtons button, .today-date button {
     padding: 5px 10px;
     border: 1px solid var(--primary-clr);
     border-radius: 5px;
@@ -264,10 +276,11 @@ body {
     color: var(--primary-clr);
 }
 
-.today-date button {
+.today-date button, .topButtons button {
     background: #238b65;
     border: 1px solid white;
     color: white;
+    margin: 5px;
 }
 
 .calendar .goto-today button::hover {
