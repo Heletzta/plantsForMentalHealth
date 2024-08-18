@@ -16,7 +16,7 @@ body {
     
 }
 
-.container {
+.entryForm {
     position: fixed;
     top: 50px;
     display: table;
@@ -125,3 +125,11 @@ body {
     transform: scale(0.98);
 }
 
+.backButton {
+    background: #238b65;
+    border: 1px solid white;
+    color: white;
+    margin: auto;
+    border-radius: 5px;
+    cursor: pointer;
+}

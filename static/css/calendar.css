@@ -447,6 +447,10 @@ body {
 }
 
 
+.entryForm--hidden {
+    display: none;
+}
+
 
 /* adjust as needed !!!!!!*/
 

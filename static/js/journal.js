@@ -9,5 +9,20 @@ function submitted() {
 
 
 function makeNewEntry() {
-    
+    const entryForm = document.querySelector("#entries");
+    const container = document.querySelector(".calContainer");
+    const topButtons = document.querySelector(".topButtons");
+    topButtons.classList.add("entryForm--hidden");
+    container.classList.add("entryForm--hidden");
+    entryForm.classList.remove("entryForm--hidden");
+}
+
+
+function goToMainPage() {
+    const entryForm = document.querySelector("#entries");
+    const container = document.querySelector(".calContainer");
+    const topButtons = document.querySelector(".topButtons");
+    topButtons.classList.remove("entryForm--hidden");
+    container.classList.remove("entryForm--hidden");
+    entryForm.classList.add("entryForm--hidden");
 }
