@@ -31,7 +31,7 @@ body {
 .container,
 .form__input,
 .form__button {
-    font-family: "Poppins", sans-serif;;
+    font-family: "Poppins";
     /*font: 500 1rem 'Roboto', sans-serif;*/
 }
 
