@@ -16,7 +16,7 @@ body {
     
 }
 
-.entryForm {
+.entryForm, .journalForm {
     position: fixed;
     top: 50px;
     display: table;

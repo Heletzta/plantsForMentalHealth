@@ -21,8 +21,8 @@ class = "login" onload="submitted()"
 
 <div class = "topButtons">
     <button id="newEntry" name="newEntry" onclick="makeNewEntry()">New Entry</button>
-    <button>New Journal</button>
-    <button>See All Journals</button>
+    <button id="newJournalButton" name="newJournalButton" onclick="makeNewJournal()">New Journal</button>
+    <button id="seeAllJournals" name="seeAllJournals" onclick="getAllJournals()">See All Journals</button>
 </div>
 
 
@@ -63,26 +63,6 @@ class = "login" onload="submitted()"
             <!--<div class="event-date"></div>-->
         </div>
         <div class="events"></div>
-        
-        <!--adjust!!!!
-        <div class="add-event-wrapper">
-            <div class="add-event-header">
-                <div class="title">Add Event</div>
-                <i class = "fas fa-times close"></i>
-            </div>
-        </div>-->
-            <!--<div class="add-event-body">
-                <div class="add-event-input">
-                    <input type = "text" placeholder="Event Name" class="event-name" />
-                </div>
-                <div class="add-event-input">
-                    <input type = "text" placeholder="Event Time From" class="event-time-from" />
-                </div>
-                <div class="add-event-input">
-                    <input type = "text" placeholder="Event Time To" class="event-time-to" />
-                </div>
-            </div>
-        </div>-->
     </div>
 </div>    
 
@@ -92,18 +72,35 @@ class = "login" onload="submitted()"
 <div id="entries" name ="entries" class="entryForm entryForm--hidden">
     <button class = "backButton" onclick="goToMainPage()"> <i class="fa-solid fa-arrow-left-long"></i> Back</button>
     <p id="status" class = "form__title" style="font-size: 20px; text-align: center; color: white; font-family: Poppins sans-serif;"> What do you want to write today? </p>
-    <div class="form__message form__message--error"> </div>
+    <!--<div class="form__message form__message--error"> </div>-->
     <form class="form" id="journalEntry" action="{{url_for('enterJournalEntry')}}" method="post">
         <input type="date" class="form__input_date" id = "date" name = "date" required> </input>
         <label for="journal" style = "color: white; font-family: Poppins sans-serif;">Choose a journal:</label>
         <select class="form__input_date" id="journal" name="journal" required> </select>
         <input type="text" class="form__input_date" id ="title" name="title" autofocus placeholder="Title"> </input>
         <input type="text" class="form__input" id="entry" name="entry" autofocus placeholder="Dear Diary, ..."> </input>
-        <!--<textarea class="form__input" id = "entry" name = "entry" placeholder="Dear Diary, ...."> </textarea> -->
         <button id = "submitButton" class = "form__button" type="submit" >Enter</button>
     </form>
-    <input type = "hidden" id="entered" name = "entered" value = "{{e}}">
+    
 </div>
+
+
+<div id="makeJournal" name="makeJournal" class="journalForm entryForm--hidden">
+    <button class = "backButton" onclick="goToMainPage()"> <i class="fa-solid fa-arrow-left-long"></i> Back</button>
+    <p id="status" class = "form__title" style="font-size: 20px; text-align: center; color: white; font-family: Poppins sans-serif;"> New Journal </p>
+    <form class="form" id="newJournal" action="{{url_for('enterJournal')}}" method="post">
+        <input type="text" class="form__input_date" id ="title" name="title" autofocus placeholder="Journal Name"> </input>
+        <label for="journalColor" style = "color: white; font-family: Poppins sans-serif;">Choose a color for your journal:</label>
+        <input type="color" class="form__input_date" id="journalColor" name="journalColor"> </input>
+        <button id = "submitButton" name = "submitButton" class = "form__button" type="submit" >Enter</button>
+    </form>
+</div>
+
+
+
+
+
+<input type = "hidden" id="entered" name = "entered" value = "{{e}}">
     <!--<div class = "container" name = "journal" id = "journal" >
         <p id="status" class = "form__title" style="font-size: 20px; text-align: center; color: black;"> What do you want to write today? </p>
         <div class="form__message form__message--error"> </div>

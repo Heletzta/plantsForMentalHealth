@@ -8,6 +8,7 @@ import requests
 import mysql.connector
 from cryptography.fernet import Fernet
 import configuration
+from datetime import date
 
 
 
@@ -186,18 +187,46 @@ def getURL():
 
 @app.route('/enterJournalEntry', methods=['POST'])
 def enterJournalEntry():
-    date = request.form['date']
+    dte = request.form['date']
     title = fernet.encrypt(request.form['title'].encode()).decode()
     entry = fernet.encrypt(request.form['entry'].encode()).decode()
     journal = request.form['journal']
     cnx = connect()
     cursor = cnx.cursor()
     # MAKE A NEW QUERY TO GET THE ID OF THE JOUNRAL!! OR FIGURE OUT HOW TO SEND IT?????? TITLES NEED TO BE UNIQUE
-    query = f'insert into journalEntries (userID, entryDate, entry) values ({session['userID']}, "{journal}", "{title}", "{date}", "{entry}");'
+    query = f'insert into journalEntries (userID, entryDate, entry) values ({session['userID']}, "{journal}", "{title}", "{dte}", "{entry}");'
     cursor.execute(query)
     cnx.commit()
     cursor.close
     return render_template('Journal.html', e='1')
+
+
+@app.route('/enterJournal', methods=['POST'])
+def enterJournal():
+    cnx = connect()
+    title = request.form['title']
+    color = request.form['journalColor']
+    dte = date.today()
+    query = f'insert into journals (userID, journalName, color, dateCreated) values ({session['userID']}, "{title}", "{color}", "{dte}");'
+    cursor = cnx.cursor()
+    cursor.execute(query)
+    cnx.commit()
+    cursor.close
+    return render_template('Journal.html', e='3')
+
+@app.route('/getAllJournals', methods=['GET'])
+def getAllJournals():
+    cnx = connect()
+    cursor = cnx.cursor()
+    query = f'select journalName, color, dateCreated from journals where userID = {session['userID']};'
+    cursor.execute(query)
+    content = cursor.fetchall()
+    cursor.close
+    print(content)
+    return content
+
+    
+
 
 
 print("STARTED PYTHON WEBSERVICE")

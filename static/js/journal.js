@@ -20,11 +20,40 @@ function makeNewEntry() {
 
 function goToMainPage() {
     const entryForm = document.querySelector("#entries");
+    const journalForm = document.querySelector("#makeJournal");
     const container = document.querySelector(".calContainer");
     const topButtons = document.querySelector(".topButtons");
     topButtons.classList.remove("entryForm--hidden");
     container.classList.remove("entryForm--hidden");
     entryForm.classList.add("entryForm--hidden");
+    journalForm.classList.add("entryForm--hidden");
 }
 
+
+function makeNewJournal() {
+    const journalForm = document.querySelector("#makeJournal");
+    const container = document.querySelector(".calContainer");
+    const topButtons = document.querySelector(".topButtons");
+    topButtons.classList.add("entryForm--hidden");
+    container.classList.add("entryForm--hidden");
+    journalForm.classList.remove("entryForm--hidden");
+}
+
+
+function getAllJournals() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        var journals = JSON.parse(this.response);
+        console.log(journals);
+        for (journal of journals) {
+            console.log(journal[0]);
+            console.log(journal[1]);
+            console.log(journal[2]);
+        }
+        //alert(this.responseText);
+    }
+    xhttp.open("GET", "/getAllJournals");
+    //xhttp.setRequestHeader("Content-type", "application/JSON");
+    xhttp.send();
+}
 
