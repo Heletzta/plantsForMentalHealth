@@ -194,7 +194,8 @@ def enterJournalEntry():
     cnx = connect()
     cursor = cnx.cursor()
     # MAKE A NEW QUERY TO GET THE ID OF THE JOUNRAL!! OR FIGURE OUT HOW TO SEND IT?????? TITLES NEED TO BE UNIQUE
-    query = f'insert into journalEntries (userID, entryDate, entry) values ({session['userID']}, "{journal}", "{title}", "{dte}", "{entry}");'
+    userID = session['userID']
+    query = f'insert into journalEntries (userID, entryDate, entry) values ({userID}, "{journal}", "{title}", "{dte}", "{entry}");'
     cursor.execute(query)
     cnx.commit()
     cursor.close
@@ -207,7 +208,10 @@ def enterJournal():
     title = request.form['title']
     color = request.form['journalColor']
     dte = date.today()
-    query = f'insert into journals (userID, journalName, color, dateCreated) values ({session['userID']}, "{title}", "{color}", "{dte}");'
+    userID = session['userID']
+
+
+    query = f'insert into journals (userID, journalName, color, dateCreated) values ({userID}, "{title}", "{color}", "{dte}");'
     cursor = cnx.cursor()
     cursor.execute(query)
     cnx.commit()
@@ -218,7 +222,8 @@ def enterJournal():
 def getAllJournals():
     cnx = connect()
     cursor = cnx.cursor()
-    query = f'select journalName, color, dateCreated from journals where userID = {session['userID']};'
+    userID = session['userID']
+    query = f'select journalName, color, dateCreated from journals where userID = {userID};'
     cursor.execute(query)
     content = cursor.fetchall()
     cursor.close
