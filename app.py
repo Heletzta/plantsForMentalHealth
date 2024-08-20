@@ -194,7 +194,6 @@ def enterJournalEntry():
     getJournalIDQuery = f'select journalID from journals where journalName = "{journal}";'
     cnx = connect()
     cursor = cnx.cursor()
-    # MAKE A NEW QUERY TO GET THE ID OF THE JOUNRAL!! OR FIGURE OUT HOW TO SEND IT?????? TITLES NEED TO BE UNIQUE
     cursor.execute(getJournalIDQuery)
     content = cursor.fetchall()
     journalID = content[0][0]
@@ -208,6 +207,7 @@ def enterJournalEntry():
 
 @app.route('/enterJournal', methods=['POST'])
 def enterJournal():
+    # titles of journals need to be unique. Make sure that there is a checker so that people don't enter the same name of a journal
     cnx = connect()
     title = request.form['title']
     color = request.form['journalColor']
