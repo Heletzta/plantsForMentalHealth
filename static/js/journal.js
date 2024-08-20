@@ -15,6 +15,7 @@ function makeNewEntry() {
     topButtons.classList.add("entryForm--hidden");
     container.classList.add("entryForm--hidden");
     entryForm.classList.remove("entryForm--hidden");
+    selectJournal();
 }
 
 
@@ -37,6 +38,26 @@ function makeNewJournal() {
     topButtons.classList.add("entryForm--hidden");
     container.classList.add("entryForm--hidden");
     journalForm.classList.remove("entryForm--hidden");
+}
+
+
+function selectJournal() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        var journals = JSON.parse(this.response);
+        console.log(journals);
+        var options;
+        for (journal of journals) {
+            options += `<option>${journal[0]}</option>`;
+        }
+        const journalSelect = document.querySelector("#journal");
+        journalSelect.innerHTML = options;
+        //alert(this.responseText);
+    }
+    xhttp.open("GET", "/getAllJournals");
+    //xhttp.setRequestHeader("Content-type", "application/JSON");
+    xhttp.send();
+    
 }
 
 

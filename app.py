@@ -191,11 +191,15 @@ def enterJournalEntry():
     title = fernet.encrypt(request.form['title'].encode()).decode()
     entry = fernet.encrypt(request.form['entry'].encode()).decode()
     journal = request.form['journal']
+    getJournalIDQuery = f'select journalID from journals where journalName = "{journal}";'
     cnx = connect()
     cursor = cnx.cursor()
     # MAKE A NEW QUERY TO GET THE ID OF THE JOUNRAL!! OR FIGURE OUT HOW TO SEND IT?????? TITLES NEED TO BE UNIQUE
+    cursor.execute(getJournalIDQuery)
+    content = cursor.fetchall()
+    journalID = content[0][0]
     userID = session['userID']
-    query = f'insert into journalEntries (userID, entryDate, entry) values ({userID}, "{journal}", "{title}", "{dte}", "{entry}");'
+    query = f'insert into journalEntries (userID, journalID, entryTitle, entryDate, entry) values ({userID}, "{journalID}", "{title}", "{dte}", "{entry}");'
     cursor.execute(query)
     cnx.commit()
     cursor.close
@@ -227,7 +231,6 @@ def getAllJournals():
     cursor.execute(query)
     content = cursor.fetchall()
     cursor.close
-    print(content)
     return content
 
     
