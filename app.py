@@ -234,6 +234,37 @@ def getAllJournals():
     return content
 
     
+@app.route('/getEntriesOfDay', methods=['POST'])
+def getEntriesOfDay():
+    output = []
+    inputs = request.get_json()
+    day = inputs['day']
+    month = inputs['month']
+    year = inputs['year']
+    userID = session['userID']
+
+    fullDate = str(year) + '-' + str(month) + '-' + str(day)
+    #print(day)
+    #print(month)
+    #print(year)
+
+    cnx = connect()
+    cursor = cnx.cursor()
+    query1 = f'select journalID, entryTitle from journalentries where userID = {userID} && entryDate = "{fullDate}";'
+    cursor.execute(query1)
+    content = cursor.fetchall()
+    #print(content)
+    # for i in range(0, len(content)):
+    for entry in content:
+        journalID = entry[0]
+        query2 = f'select journalName, color from journals where userID = {userID} && journalID = {journalID};'
+        cursor.execute(query2)
+        content2 = cursor.fetchall()
+        #print(content2)
+        decodedEntryTitle = fernet.decrypt(entry[1].encode()).decode()
+        output.append([decodedEntryTitle, content2[0][0], content2[0][1]])
+    cursor.close
+    return output
 
 
 

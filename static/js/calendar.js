@@ -17,6 +17,8 @@ const eventDate = document.querySelector(".event-date");
 // events container
 const eventsContainer = document.querySelector(".events");
 
+
+
 const eventsArr = [
     {
       day: 14,
@@ -250,38 +252,65 @@ function getActiveDay(date) {
 
 
 // function to show events of that day
-
+//STOPPED HERE
 function updateEvents(date) {
+    // get all the events of that day
     let events = "";
-    //get events of active day only
-    eventsArr.forEach((event) => {
-        if (date === event.day && month + 1 === event.month && Number(year) === event.year) {
-            //then show event on document
-            event.events.forEach((event) =>  {
-                events += 
-                `<div class="event">
-                    <div class="title">
-                        <i class="fas fa-circle"></i>
-                        <h3 class = "event-title">${event.title}</h3>
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        
+        var entries = JSON.parse(this.response);
+        for (entry of entries) {
+            events += `<div class="event">
+                        <div class="title">
+                            <i class="fas fa-circle" style="color: ${entry[2]}"></i>
+                            <h3 class = "event-title ">${entry[0]}</h3>
+                        </div>
+                        <div class="event-time">
+                            <span class = "event-time">${entry[1]}</span>
+                        </div>
                     </div>
-                    <div class="event-time">
-                        <span class = "event-time">${event.time}</span>
-                    </div>
-                </div>
-                `;
-            })
+                    `;
         }
+
+        if(events === "") {
+            events = 
+            `<div class="no-event">
+                <h3>No Entries</h3>
+            </div>
+            `;
+        }
+        eventsContainer.innerHTML = events;
+    }
+    xhttp.open("POST", "/getEntriesOfDay");
+    xhttp.setRequestHeader("Content-type", "application/JSON");
+    xhttp.send(JSON.stringify({ "day": date, "month" : month + 1, "year" : Number(year) }));
+    //xhttp.send(date, month + 1, Number(year));
+
+    
+}
+
+
+//STOPPED AT THIS FUNCTION
+//NEED TO MAKE AN EDIT FORM IN HTML???
+// THEN MAKE THAT FORM ACTIVE, AND HAVE A WAY TO KNOW WHICH ENTRY YOU ARE EDITTING
+
+// add event listeners for each entry in the list for a specific day
+function clickOnEntry() {
+    const entries = document.querySelectorAll(".event");
+    const editEntryPage = "";
+    entries.forEach((entry) => {
+        entry.addEventListener("click", (e) => {
+
+        });
+        
+        /*editEntryPage += `
+        <div class="entryForm"> 
+            <>                
+        </div>`;*/
     });
 
-    if(events === "") {
-        events = 
-        `<div class="no-event">
-            <h3>No Entries</h3>
-        </div>
-        `;
-    }
-    console.log(events);
-    eventsContainer.innerHTML = events;
 }
 
 
