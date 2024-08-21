@@ -21,15 +21,18 @@ function makeNewEntry() {
 }
 
 
+
 function goToMainPage() {
     const entryForm = document.querySelector("#entries");
     const journalForm = document.querySelector("#makeJournal");
     const container = document.querySelector(".calContainer");
     const topButtons = document.querySelector(".topButtons");
+    const editForm = document.querySelector("#entriesEdit");
     topButtons.classList.remove("entryForm--hidden");
     container.classList.remove("entryForm--hidden");
     entryForm.classList.add("entryForm--hidden");
     journalForm.classList.add("entryForm--hidden");
+    editForm.classList.add("entryForm--hidden");
 }
 
 

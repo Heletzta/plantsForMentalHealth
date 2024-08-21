@@ -262,7 +262,7 @@ function updateEvents(date) {
         
         var entries = JSON.parse(this.response);
         for (entry of entries) {
-            events += `<div class="event">
+            events += `<div class="event" id="${entry[3]}">
                         <div class="title">
                             <i class="fas fa-circle" style="color: ${entry[2]}"></i>
                             <h3 class = "event-title ">${entry[0]}</h3>
@@ -282,12 +282,13 @@ function updateEvents(date) {
             `;
         }
         eventsContainer.innerHTML = events;
+        clickOnEntry();
     }
     xhttp.open("POST", "/getEntriesOfDay");
     xhttp.setRequestHeader("Content-type", "application/JSON");
     xhttp.send(JSON.stringify({ "day": date, "month" : month + 1, "year" : Number(year) }));
     //xhttp.send(date, month + 1, Number(year));
-
+    
     
 }
 
@@ -299,20 +300,66 @@ function updateEvents(date) {
 // add event listeners for each entry in the list for a specific day
 function clickOnEntry() {
     const entries = document.querySelectorAll(".event");
-    const editEntryPage = "";
-    entries.forEach((entry) => {
+    for (entry of entries) {
+        console.log(entry);
         entry.addEventListener("click", (e) => {
-
+            console.log("I'm here!");
+            console.log(entry.id);
+            editEntry(entry.id);
         });
-        
-        /*editEntryPage += `
-        <div class="entryForm"> 
-            <>                
-        </div>`;*/
-    });
-
+    }
 }
 
 
+///function for when someone clicks on an entry to see it or edit it.
+function editEntry(id) {
+    const editEntry = document.querySelector("#entriesEdit");
+    const container = document.querySelector(".calContainer");
+    const topButtons = document.querySelector(".topButtons");
+    topButtons.classList.add("entryForm--hidden");
+    container.classList.add("entryForm--hidden");
+
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        // it should get back the title, journal its from, date, and entry as a list
+        var items = JSON.parse(this.response);
+        var title = items[0];
+        var journal = items[1];
+        var date = getISODateFormat(items[2]);
+
+        var entry = items[3];
+
+        //edit each form field to have the preset things, and then the user can change them if necessary
+        const statusEdit = document.querySelector("#statusEdit");
+        const dateEdit = document.querySelector("#dateEdit");
+        const journalEdit = document.querySelector("#journalEdit");
+        const titleEdit = document.querySelector("#titleEdit");
+        const entryEdit = document.querySelector("#entryEdit");
+
+        statusEdit.innerHTML = `Editing: ${title}`;
+        dateEdit.value = date;
+        journalEdit.value = journal;
+        titleEdit.value = title;
+        entryEdit.value = entry;
+        
+
+    }
+
+    xhttp.open("POST", "/getEntryInfo");
+    xhttp.setRequestHeader("Content-type", "application/JSON");
+    xhttp.send(JSON.stringify({"id" : id}));
+
+    editEntry.classList.remove("entryForm--hidden");
+}
+
+
+
+function getISODateFormat(date) {
+    var d = (new Date(date)).toISOString();
+    var want = d.split("T")[0];
+    return want;
+    
+}
 
 

@@ -250,7 +250,7 @@ def getEntriesOfDay():
 
     cnx = connect()
     cursor = cnx.cursor()
-    query1 = f'select journalID, entryTitle from journalentries where userID = {userID} && entryDate = "{fullDate}";'
+    query1 = f'select journalID, entryTitle, entryID from journalentries where userID = {userID} && entryDate = "{fullDate}";'
     cursor.execute(query1)
     content = cursor.fetchall()
     #print(content)
@@ -262,9 +262,44 @@ def getEntriesOfDay():
         content2 = cursor.fetchall()
         #print(content2)
         decodedEntryTitle = fernet.decrypt(entry[1].encode()).decode()
-        output.append([decodedEntryTitle, content2[0][0], content2[0][1]])
+        output.append([decodedEntryTitle, content2[0][0], content2[0][1], entry[2]])
     cursor.close
     return output
+
+
+
+@app.route('/getEntryInfo', methods = ['POST'])
+def getEntryInfo():
+    cnx = connect()
+    cursor = cnx.cursor()
+    inp = request.get_json()
+    #print(inp)
+    entryID = inp['id']
+    # title, journal, date, entry
+    query1 = f'select entryTitle, journalID, entryDate, entry from journalentries where entryID = {entryID};'
+    cursor.execute(query1)
+    content = cursor.fetchall()
+    content = content[0] # get just the entry's attributes as a list
+    
+    # decode the title
+    decodedEntryTitle = fernet.decrypt(content[0].encode()).decode() # first thing in the output list
+
+    # get the journal name from the journalID
+    journalID = content[1]
+    query2 = f'select journalName from journals where journalID = {journalID};'
+    cursor.execute(query2)
+    content2 = cursor.fetchall()
+    journalName = content2[0][0] # second thing in the list
+
+    # get the date
+    entryDate = content[2] # third thing in the list
+
+    # get and decode the entry
+    decodedEntry = fernet.decrypt(content[3].encode()).decode() # fourth thing in the list
+
+    return [decodedEntryTitle, journalName, entryDate, decodedEntry]
+
+
 
 
 

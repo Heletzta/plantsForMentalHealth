@@ -78,7 +78,8 @@ class = "login" onload="submitted()"
         <label for="journal" style = "color: white; font-family: Poppins sans-serif;">Choose a journal:</label>
         <select class="form__input_date" id="journal" name="journal" required> </select>
         <input type="text" class="form__input_date" id ="title" name="title" autofocus placeholder="Title"> </input>
-        <input type="text" class="form__input" id="entry" name="entry" autofocus placeholder="Dear Diary, ..."> </input>
+        <!--<input type="text" class="form__input" id="entry" name="entry" autofocus placeholder="Dear Diary, ..."> </input>-->
+        <textarea class="form__input" id = "entry" name = "entry" placeholder="Dear Diary..."></textarea>
         <button id = "submitButton" class = "form__button" type="submit" >Enter</button>
     </form>
     
@@ -96,8 +97,24 @@ class = "login" onload="submitted()"
     </form>
 </div>
 
+<!--TODO-->
+<!-- make only one form, and make javascript fix the differences-->
+ <!-- edit the journal selector to select the right journal when editing an entry-->
 
-
+<!-- Edit  form for editing entries, or viewing them! -->
+<div id="entriesEdit" name ="entriesEdit" class="entryForm entryForm--hidden">
+    <button class = "backButton" onclick="goToMainPage()"> <i class="fa-solid fa-arrow-left-long"></i> Back</button>
+    <p id="statusEdit" class = "form__title" style="font-size: 20px; text-align: center; color: white; font-family: Poppins sans-serif;"> Editing: </p>
+    <form class="form" id="journalEntryEdit" action="{{url_for('enterJournalEntry')}}" method="post">
+        <input type="date" class="form__input_date" id = "dateEdit" name = "dateEdit" required> </input>
+        <label for="journal" style = "color: white; font-family: Poppins sans-serif;">Choose a journal:</label>
+        <select class="form__input_date" id="journalEdit" name="journalEdit" required> </select>
+        <input type="text" class="form__input_date" id ="titleEdit" name="titleEdit" autofocus placeholder="Title"> </input>
+        <!--<input type="text" class="form__input" id="entryEdit" name="entryEdit" autofocus placeholder="Dear Diary, ..."> </input>-->
+        <textarea class="form__input" id = "entryEdit" name = "entryEdit" placeholder="Dear Diary..."></textarea>
+        <button id = "submitButtonEdit" class = "form__button" type="submit" >Save Changes</button>
+    </form>
+</div>
 
 
 <input type = "hidden" id="entered" name = "entered" value = "{{e}}">
