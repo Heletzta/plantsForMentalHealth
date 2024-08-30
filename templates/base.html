@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    
     <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}">
     <link rel="stylesheet" 
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
@@ -18,7 +19,8 @@
     </ul>
 </div>
 
-    {% block js %} {% endblock %}
+    {% block script %} {% endblock %}
+    
 </head>
 
 <body {% block action %} {% endblock %}>

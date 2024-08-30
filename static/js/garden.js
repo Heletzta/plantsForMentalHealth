@@ -1,7 +1,11 @@
+
+let coins = 100;
+
 const bar = document.querySelector("#bar");
 console.log("this page loaded omml");
 
 const xBar = document.getElementById("xButton");
+
 
 
 bar.addEventListener("click", function() {
@@ -13,7 +17,50 @@ bar.addEventListener("click", function() {
 xBar.addEventListener("click", function() {
     var div = document.getElementById("slidingW");
     moveOutLeft(div);
-})
+});
+
+const choice1 = document.getElementById("addPlantBar");
+const choice2 = document.getElementById("addFamilyBar");
+
+//To display shop when clicking on addPlantBar
+choice1.addEventListener("click", function() {
+  var div = document.getElementById("slidingW");
+  moveOutLeft(div);
+  const shop = document.getElementById("shop");
+  if (shop.style.display === "none" || shop.style.display ==='') {
+    shop.style.display = "block";
+  }
+  else {
+    shop.style.display = "none";
+  }
+});
+
+//Let user click on plant to purchase it
+document.querySelectorAll('.plant').forEach(plant => {
+    plant.addEventListener("click", function() {
+      const price = parseInt(this.dataset.price);
+      if (price <= coins) {
+        if(window.confirm("Are you sure you would like to purchase this plant?")) {
+          coins -= price;
+          document.getElementById.coinCount.innerText = coins;
+          const plantClone = this.cloneNode(true);
+          plantClone.removeAttribute('data-price');
+          //add plant to garden
+          document.getElementById('garden').appendChild(plantClone);
+          alert("Congratulations! You can now view the plant in your garden.");
+        }
+      }
+      else {
+        alert("You do not have enough coins!");
+      }
+    });
+  });
+
+  const xBar2 = document.getElementById("xButton2");
+  xBar2.addEventListener("click", function() {
+    shop.style.display = "none";
+  });
+
 
 
 function moveOutLeft(div) {
@@ -61,7 +108,9 @@ function moveInFromLeft(div) {
         clearInterval(timer);
       }
     }, 5);
-
     
-
 }
+
+
+
+

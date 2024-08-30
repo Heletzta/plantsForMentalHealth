@@ -1,0 +1,53 @@
+body {
+    --color-primary: #13c94a;
+    --color-error: #cc3333;
+    --color-success: #0e3e0e;
+    --border-radius: 4px;
+    background: var(--color-primary);
+} 
+
+
+/* body {
+  background-color: red;
+} */ 
+#shop {
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    border: 2px solid #b3b9b19b;
+    margin-top: 10px;
+    background-color: #22754b;
+
+}
+
+.plant {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    background-color: var(green);
+    cursor: pointer;
+  }
+
+  .plant:hover {
+    background-color: #144e28;
+  }
+
+  .plant-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  .plant-name {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .plant-price {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+  } 
+  
