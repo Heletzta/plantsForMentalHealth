@@ -313,7 +313,7 @@ function clickOnEntry() {
 
 ///function for when someone clicks on an entry to see it or edit it.
 function editEntry(id) {
-    const editEntry = document.querySelector("#entriesEdit");
+    const editEntry = document.querySelector("#entries");
     const container = document.querySelector(".calContainer");
     const topButtons = document.querySelector(".topButtons");
     topButtons.classList.add("entryForm--hidden");
@@ -331,17 +331,20 @@ function editEntry(id) {
         var entry = items[3];
 
         //edit each form field to have the preset things, and then the user can change them if necessary
-        const statusEdit = document.querySelector("#statusEdit");
-        const dateEdit = document.querySelector("#dateEdit");
-        const journalEdit = document.querySelector("#journalEdit");
-        const titleEdit = document.querySelector("#titleEdit");
-        const entryEdit = document.querySelector("#entryEdit");
+        const statusEdit = document.querySelector("#status");
+        const dateEdit = document.querySelector("#date");
+        const journalEdit = document.querySelector("#journal");
+        const titleEdit = document.querySelector("#title");
+        const entryEdit = document.querySelector("#entry");
 
         statusEdit.innerHTML = `Editing: ${title}`;
         dateEdit.value = date;
         journalEdit.value = journal;
         titleEdit.value = title;
         entryEdit.value = entry;
+
+        editEntry.classList.remove("entryForm--hidden");
+
         
 
     }
@@ -350,7 +353,7 @@ function editEntry(id) {
     xhttp.setRequestHeader("Content-type", "application/JSON");
     xhttp.send(JSON.stringify({"id" : id}));
 
-    editEntry.classList.remove("entryForm--hidden");
+    
 }
 
 
