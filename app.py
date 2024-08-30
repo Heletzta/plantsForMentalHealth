@@ -191,11 +191,14 @@ def enterJournalEntry():
     title = fernet.encrypt(request.form['title'].encode()).decode()
     entry = fernet.encrypt(request.form['entry'].encode()).decode()
     journal = request.form['journal']
+    getJournalIDQuery = f'select journalID from journals where journalName = "{journal}";'
     cnx = connect()
     cursor = cnx.cursor()
-    # MAKE A NEW QUERY TO GET THE ID OF THE JOUNRAL!! OR FIGURE OUT HOW TO SEND IT?????? TITLES NEED TO BE UNIQUE
+    cursor.execute(getJournalIDQuery)
+    content = cursor.fetchall()
+    journalID = content[0][0]
     userID = session['userID']
-    query = f'insert into journalEntries (userID, entryDate, entry) values ({userID}, "{journal}", "{title}", "{dte}", "{entry}");'
+    query = f'insert into journalEntries (userID, journalID, entryTitle, entryDate, entry) values ({userID}, "{journalID}", "{title}", "{dte}", "{entry}");'
     cursor.execute(query)
     cnx.commit()
     cursor.close
@@ -204,6 +207,7 @@ def enterJournalEntry():
 
 @app.route('/enterJournal', methods=['POST'])
 def enterJournal():
+    # titles of journals need to be unique. Make sure that there is a checker so that people don't enter the same name of a journal
     cnx = connect()
     title = request.form['title']
     color = request.form['journalColor']
@@ -227,10 +231,75 @@ def getAllJournals():
     cursor.execute(query)
     content = cursor.fetchall()
     cursor.close
-    print(content)
     return content
 
     
+@app.route('/getEntriesOfDay', methods=['POST'])
+def getEntriesOfDay():
+    output = []
+    inputs = request.get_json()
+    day = inputs['day']
+    month = inputs['month']
+    year = inputs['year']
+    userID = session['userID']
+
+    fullDate = str(year) + '-' + str(month) + '-' + str(day)
+    #print(day)
+    #print(month)
+    #print(year)
+
+    cnx = connect()
+    cursor = cnx.cursor()
+    query1 = f'select journalID, entryTitle, entryID from journalentries where userID = {userID} && entryDate = "{fullDate}";'
+    cursor.execute(query1)
+    content = cursor.fetchall()
+    #print(content)
+    # for i in range(0, len(content)):
+    for entry in content:
+        journalID = entry[0]
+        query2 = f'select journalName, color from journals where userID = {userID} && journalID = {journalID};'
+        cursor.execute(query2)
+        content2 = cursor.fetchall()
+        #print(content2)
+        decodedEntryTitle = fernet.decrypt(entry[1].encode()).decode()
+        output.append([decodedEntryTitle, content2[0][0], content2[0][1], entry[2]])
+    cursor.close
+    return output
+
+
+
+@app.route('/getEntryInfo', methods = ['POST'])
+def getEntryInfo():
+    cnx = connect()
+    cursor = cnx.cursor()
+    inp = request.get_json()
+    #print(inp)
+    entryID = inp['id']
+    # title, journal, date, entry
+    query1 = f'select entryTitle, journalID, entryDate, entry from journalentries where entryID = {entryID};'
+    cursor.execute(query1)
+    content = cursor.fetchall()
+    content = content[0] # get just the entry's attributes as a list
+    
+    # decode the title
+    decodedEntryTitle = fernet.decrypt(content[0].encode()).decode() # first thing in the output list
+
+    # get the journal name from the journalID
+    journalID = content[1]
+    query2 = f'select journalName from journals where journalID = {journalID};'
+    cursor.execute(query2)
+    content2 = cursor.fetchall()
+    journalName = content2[0][0] # second thing in the list
+
+    # get the date
+    entryDate = content[2] # third thing in the list
+
+    # get and decode the entry
+    decodedEntry = fernet.decrypt(content[3].encode()).decode() # fourth thing in the list
+
+    return [decodedEntryTitle, journalName, entryDate, decodedEntry]
+
+
 
 
 

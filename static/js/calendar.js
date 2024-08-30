@@ -17,6 +17,8 @@ const eventDate = document.querySelector(".event-date");
 // events container
 const eventsContainer = document.querySelector(".events");
 
+
+
 const eventsArr = [
     {
       day: 14,
@@ -250,40 +252,114 @@ function getActiveDay(date) {
 
 
 // function to show events of that day
-
+//STOPPED HERE
 function updateEvents(date) {
+    // get all the events of that day
     let events = "";
-    //get events of active day only
-    eventsArr.forEach((event) => {
-        if (date === event.day && month + 1 === event.month && Number(year) === event.year) {
-            //then show event on document
-            event.events.forEach((event) =>  {
-                events += 
-                `<div class="event">
-                    <div class="title">
-                        <i class="fas fa-circle"></i>
-                        <h3 class = "event-title">${event.title}</h3>
-                    </div>
-                    <div class="event-time">
-                        <span class = "event-time">${event.time}</span>
-                    </div>
-                </div>
-                `;
-            })
-        }
-    });
 
-    if(events === "") {
-        events = 
-        `<div class="no-event">
-            <h3>No Entries</h3>
-        </div>
-        `;
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        
+        var entries = JSON.parse(this.response);
+        for (entry of entries) {
+            events += `<div class="event" id="${entry[3]}">
+                        <div class="title">
+                            <i class="fas fa-circle" style="color: ${entry[2]}"></i>
+                            <h3 class = "event-title ">${entry[0]}</h3>
+                        </div>
+                        <div class="event-time">
+                            <span class = "event-time">${entry[1]}</span>
+                        </div>
+                    </div>
+                    `;
+        }
+
+        if(events === "") {
+            events = 
+            `<div class="no-event">
+                <h3>No Entries</h3>
+            </div>
+            `;
+        }
+        eventsContainer.innerHTML = events;
+        clickOnEntry();
     }
-    console.log(events);
-    eventsContainer.innerHTML = events;
+    xhttp.open("POST", "/getEntriesOfDay");
+    xhttp.setRequestHeader("Content-type", "application/JSON");
+    xhttp.send(JSON.stringify({ "day": date, "month" : month + 1, "year" : Number(year) }));
+    //xhttp.send(date, month + 1, Number(year));
+    
+    
 }
 
 
+//STOPPED AT THIS FUNCTION
+//NEED TO MAKE AN EDIT FORM IN HTML???
+// THEN MAKE THAT FORM ACTIVE, AND HAVE A WAY TO KNOW WHICH ENTRY YOU ARE EDITTING
+
+// add event listeners for each entry in the list for a specific day
+function clickOnEntry() {
+    const entries = document.querySelectorAll(".event");
+    for (entry of entries) {
+        console.log(entry);
+        entry.addEventListener("click", (e) => {
+            console.log("I'm here!");
+            console.log(entry.id);
+            editEntry(entry.id);
+        });
+    }
+}
+
+
+///function for when someone clicks on an entry to see it or edit it.
+function editEntry(id) {
+    const editEntry = document.querySelector("#entriesEdit");
+    const container = document.querySelector(".calContainer");
+    const topButtons = document.querySelector(".topButtons");
+    topButtons.classList.add("entryForm--hidden");
+    container.classList.add("entryForm--hidden");
+
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        // it should get back the title, journal its from, date, and entry as a list
+        var items = JSON.parse(this.response);
+        var title = items[0];
+        var journal = items[1];
+        var date = getISODateFormat(items[2]);
+
+        var entry = items[3];
+
+        //edit each form field to have the preset things, and then the user can change them if necessary
+        const statusEdit = document.querySelector("#statusEdit");
+        const dateEdit = document.querySelector("#dateEdit");
+        const journalEdit = document.querySelector("#journalEdit");
+        const titleEdit = document.querySelector("#titleEdit");
+        const entryEdit = document.querySelector("#entryEdit");
+
+        statusEdit.innerHTML = `Editing: ${title}`;
+        dateEdit.value = date;
+        journalEdit.value = journal;
+        titleEdit.value = title;
+        entryEdit.value = entry;
+        
+
+    }
+
+    xhttp.open("POST", "/getEntryInfo");
+    xhttp.setRequestHeader("Content-type", "application/JSON");
+    xhttp.send(JSON.stringify({"id" : id}));
+
+    editEntry.classList.remove("entryForm--hidden");
+}
+
+
+
+function getISODateFormat(date) {
+    var d = (new Date(date)).toISOString();
+    var want = d.split("T")[0];
+    return want;
+    
+}
 
 
